@@ -1,0 +1,1 @@
+export const ownerResume={fullName:'Demo Candidate',email:'candidate@example.com',phone:'',location:'Georgia',links:'',education:'Example degree (fictional demonstration)',experience:'',projects:'Example CSV project\nPython data validation and CSV analysis.',skills:'Python, pandas',languages:'English - B2 (demo only)'};

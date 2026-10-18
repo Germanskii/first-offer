@@ -1,0 +1,21 @@
+#resume-draft-dialog{width:min(900px,calc(100vw - 24px));max-height:94vh}
+#resume-base-dialog{width:min(800px,calc(100vw - 24px));max-height:94vh}
+.resume-block{display:flex;flex-direction:column;gap:8px;margin:18px 0;font-size:14px;font-weight:600}
+.resume-block textarea{font-size:14px;font-weight:400;line-height:1.6;resize:vertical;min-height:140px;white-space:pre-wrap}
+.resume-tools{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+#resume-result{font-size:14px;min-height:22px}
+#resume-evidence{font-size:14px;line-height:1.5}
+#resume-vacancy-link{color:var(--forest,#243d35);text-decoration:underline}
+#portfolio-dialog{width:min(850px,calc(100vw - 24px));max-height:94vh}
+.portfolio-card{border:1px solid var(--line,#d7dee4);border-radius:12px;padding:16px;margin:16px 0}
+.portfolio-card textarea{min-height:100px}
+#application-tools details{border:1px solid var(--line,#d7dee4);border-radius:10px;padding:14px;margin:12px 0;font-size:14px;line-height:1.6}
+#application-tools summary,#portfolio-dialog summary{cursor:pointer;font-weight:600;font-size:16px}
+.project-choice{display:flex;align-items:flex-start;gap:10px;margin:12px 0;font-weight:400}
+.project-choice input{flex:0 0 18px;width:18px;height:18px;margin-top:4px}
+#resume-changes{max-height:260px;overflow:auto;overflow-wrap:anywhere}
+#resume-checks li,#resume-questions li,#resume-prep-plan li{margin:8px 0}
+.check-warn{color:#8a3b10}.check-ok{color:#185e42}
+#portfolio-source-status,#portfolio-result,#resume-email-result{font-size:14px;line-height:1.5}
+#resume-draft-dialog .dialog-top h2,#resume-base-dialog .dialog-top h2{font-size:24px}
+@media(max-width:600px){.resume-tools>*{flex:1 1 100%}.resume-block textarea{font-size:16px}#prepare-resume{width:100%;order:4}#resume-draft-dialog .dialog-top,#resume-base-dialog .dialog-top{gap:10px}}

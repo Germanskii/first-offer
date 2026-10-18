@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1790419290245,
+      "tag": "0000_orange_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790585541203,
+      "tag": "0001_complex_dreadnoughts",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790597596566,
+      "tag": "0002_premium_surge",
+      "breakpoints": true
+    }
+  ]
+}

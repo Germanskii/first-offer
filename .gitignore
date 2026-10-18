@@ -1,0 +1,16 @@
+node_modules
+node_modules/
+.env
+.env.*
+!.env.example
+.dev.vars
+.wrangler/
+.openai/
+artifacts/
+output/
+*.sqlite
+*.sqlite3
+*.db
+*.pdf
+*.zip
+*.tar.gz

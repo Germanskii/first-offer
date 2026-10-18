@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "checkedAt": "2026-10-18T00:00:00Z",
+  "scheduleLabel": "Demo catalogue - manual updates",
+  "summary": "Демонстрационные данные. Это не реальные вакансии.",
+  "jobs": [
+    {
+      "id": "demo-intern",
+      "title": "Data Engineering Intern (DEMO)",
+      "company": "Example Company (fictional)",
+      "role": "Data Engineering",
+      "format": "Удалённо",
+      "country": "Грузия",
+      "location": "Georgia (demo)",
+      "priority": "high",
+      "url": "https://example.com/jobs/demo",
+      "tags": [
+        "Python",
+        "SQL"
+      ],
+      "salary": "Not specified - demo",
+      "fit": "Fictional example for exploring the tracker",
+      "sourceType": "Демо",
+      "sourceSummary": "Fictional example; not accepting applications.",
+      "createdAt": "2026-10-18T00:00:00Z",
+      "deadline": "",
+      "verifiedAt": "2026-10-18",
+      "availability": "unverified",
+      "match": "core",
+      "positionCategory": "Data Engineering",
+      "positionType": "Internship",
+      "requiredStack": "Python, SQL",
+      "requiredExperience": "0-1 year",
+      "englishLevel": "B2",
+      "remoteEligibility": "unknown",
+      "source": "Other"
+    }
+  ]
+}
