@@ -39,7 +39,7 @@ export default {async fetch(request,env){
    if(request.method==='GET'){const row=await env.DB.prepare('SELECT profile, updated_at FROM search_profiles WHERE user_id = ?').bind(userId).first();return json(row?{profile:JSON.parse(row.profile),updatedAt:row.updated_at}:{profile:null,updatedAt:null})}
    if(request.method!=='PUT')return json({error:'method_not_allowed'},405);
    if(request.headers.get('Origin')!==url.origin||!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'forbidden'},403);
-   const raw=await request.text();if(raw.length>30000)return json({error:'too_large'},413);const data=JSON.parse(raw);const limits={headline:300,githubUrl:2000,linkedinUrl:2000,targetRoles:2000,skills:4000,locations:2000,languages:1000,projects:8000,cvVersion:160,cvUrl:2000};const profile={};for(const [field,max]of Object.entries(limits)){if(typeof data?.[field]!=='string'||data[field].length>max)return json({error:'invalid_profile'},400);profile[field]=data[field]}
+   const raw=await request.text();if(raw.length>30000)return json({error:'too_large'},413);let data;try{data=JSON.parse(raw)}catch{return json({error:'invalid_json'},400)}if(!data||typeof data!=='object'||Array.isArray(data))return json({error:'invalid_profile'},400);const limits={headline:300,githubUrl:2000,linkedinUrl:2000,targetRoles:2000,skills:4000,locations:2000,languages:1000,projects:8000,cvVersion:160,cvUrl:2000};const profile={};for(const [field,max]of Object.entries(limits)){if(typeof data?.[field]!=='string'||data[field].length>max)return json({error:'invalid_profile'},400);profile[field]=data[field]}
    for(const field of ['githubUrl','linkedinUrl','cvUrl'])if(profile[field]){try{const protocol=new URL(profile[field]).protocol;if(protocol!=='http:'&&protocol!=='https:')throw Error()}catch{return json({error:'invalid_url'},400)}}
    const at=new Date().toISOString();await env.DB.prepare('INSERT INTO search_profiles (user_id,profile,updated_at) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET profile=excluded.profile,updated_at=excluded.updated_at').bind(userId,JSON.stringify(profile),at).run();return json({updatedAt:at});
   }catch(e){console.error('Search profile storage failed',e.message);return json({error:'storage_unavailable'},503)}
@@ -57,7 +57,7 @@ export default {async fetch(request,env){
    if(request.method!=='PUT')return json({error:'method_not_allowed'},405);
    if(request.headers.get('Origin')!==url.origin||!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'forbidden'},403);
    const raw=await request.text();if(raw.length>2000000)return json({error:'too_large'},413);
-   const data=JSON.parse(raw);if(!Number.isInteger(data.revision)||data.revision<0||data.state?.version!==1||!Array.isArray(data.state.jobs)||data.state.jobs.length>3000)return json({error:'invalid_state'},400);
+   let data;try{data=JSON.parse(raw)}catch{return json({error:'invalid_json'},400)}if(!data||typeof data!=='object'||Array.isArray(data))return json({error:'invalid_state'},400);if(!Number.isInteger(data.revision)||data.revision<0||data.state?.version!==1||!Array.isArray(data.state.jobs)||data.state.jobs.length>3000)return json({error:'invalid_state'},400);
    const value=JSON.stringify(data.state),at=new Date().toISOString();
    // Immutable, account-scoped snapshot before the first write by the upgraded app.
    // Failure aborts the save; never discard the original cloud state without a backup.

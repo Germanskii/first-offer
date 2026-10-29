@@ -2,6 +2,12 @@
 
 A job-search tracker for internships and a first role in IT. This public edition contains fictional examples and no personal CV, account data, application records or production configuration.
 
+**JavaScript · Node.js · SQLite · Drizzle ORM · JSDOM · pdf-lib**
+
+The local data workflow combines validated catalogue input, SQLite schema migrations,
+account-scoped JSON state and optimistic revision checks. It demonstrates application
+data handling; it is not a data warehouse, scheduled ETL service or analytics platform.
+
 ## Features
 
 - Vacancy, application and interview views, notes, follow-up dates and CSV/JSON export.
@@ -10,13 +16,15 @@ A job-search tracker for internships and a first role in IT. This public edition
 - Explicit eligibility checks for working from Georgia; Russian remote roles require confirmed cross-border access.
 - Editable vacancy-specific CV and cover-letter drafts built from confirmed facts; project selection, change explanations and local PDF export.
 - Portfolio fact approval, application checks and short interview practice plans.
-- Per-account persistence, optimistic revision checks and backup snapshots in the production Worker.
+- Per-account persistence, optimistic revision checks and backup snapshots in the Worker API.
 
 Ranking is a deterministic aid, not a hiring probability. CV adaptation reorders supplied facts; it does not scrape employer pages or invent qualifications. Source links do not connect GitHub or LinkedIn accounts. The mail button opens a compose request; it does not send email or attach documents.
 
 ## Run the local demonstration
 
-Use Node.js 22.13 or newer (Node 24 recommended).
+Use Node.js **24.15 or newer within the 24.x line**; the audit used **24.22.2**.
+The accepted ranges in `package.json` also reflect the JSDOM test dependency's
+requirements. Node 18 and early Node 22 releases cannot run the complete checks.
 
 ```bash
 npm ci
@@ -37,6 +45,10 @@ npm run build:resume-pdf
 
 The tests run the actual client modules in JSDOM and the Worker against SQLite. They cover saves/reloads, account isolation, revision conflicts, ranking, geographic eligibility, CV fact approval and PDF generation. This is not browser visual testing.
 
+The syntax check covers application, server, script and test modules. CI also
+rebuilds the PDF bundle and checks that it matches the committed artifact.
+See [VALIDATION.md](VALIDATION.md) for executed checks and dependency-audit limits.
+
 ## Architecture
 
 | Path | Purpose |
@@ -48,6 +60,10 @@ The tests run the actual client modules in JSDOM and the Worker against SQLite. 
 | `server.mjs` | Loopback-only local development adapter |
 | `scripts/pdf-entry.js` | Local PDF generation; bundled browser output is included |
 | `tests/` | Local integration and rules tests |
+
+The `dist/` name is retained from the source edition. The application modules
+there are the maintained source files; only `dist/client/vendor/cv-pdf.js` is a
+generated bundle. To change PDF generation, edit `scripts/pdf-entry.js` and rebuild.
 
 The Worker expects a trusted authentication gateway to supply identity headers. Those headers are not an authentication mechanism if clients can supply them directly. Public deployment requires an authentication integration that strips client identity headers, validates the session, and provides trusted identity, plus the logical `DB` and `ASSETS` bindings. Do not deploy the Worker publicly without that boundary.
 
@@ -64,5 +80,7 @@ The included catalogue is fictional. No live search automation or twice-daily up
 - The first-write strategy backup is a snapshot, not a rolling disaster-recovery system.
 - PDF export works locally; unsupported glyphs require editing before export.
 - No automatic email delivery or mailbox synchronization is implemented.
+- Invalid JSON and non-object API payloads return HTTP 400 before any storage write;
+  storage failures remain separate HTTP 503 responses.
 
 This project was developed with AI assistance. The public edition is published with a fresh history to exclude private implementation history. Third-party package and font notices retain their own terms; see `THIRD_PARTY_NOTICES.md`. No project-wide redistribution license is assigned in this edition.

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
-    "check": "node --check dist/client/app.js && node --check dist/client/strategy.js && node --check dist/client/strategy-ui.js && node --check dist/client/resume-ui.js && node --check dist/client/resume.js && node --check dist/server/index.js && node scripts/check-feed.mjs",
+    "check": "node scripts/check-syntax.mjs && node scripts/check-feed.mjs",
     "build:resume-pdf": "esbuild scripts/pdf-entry.js --bundle --format=esm --platform=browser --minify --outfile=dist/client/vendor/cv-pdf.js",
     "test": "node --experimental-vm-modules --test tests/*.test.mjs"
   },
@@ -22,6 +22,6 @@
   },
   "description": "First Offer - internship-first job tracker with truthful CV adaptation",
   "engines": {
-    "node": ">=22.13"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   }
 }
