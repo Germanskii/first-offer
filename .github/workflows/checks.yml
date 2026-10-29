@@ -14,3 +14,5 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      - run: npm run build:resume-pdf
+      - run: git diff --exit-code -- dist/client/vendor/cv-pdf.js
